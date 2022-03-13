@@ -9,8 +9,14 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.pinterestappkotlin.R
+import com.example.pinterestappkotlin.activity.MainActivity
+import com.example.pinterestappkotlin.adapter.RoomPhotosAdapter
+import com.example.pinterestappkotlin.database.entity.PhotoRoom
+import com.example.pinterestappkotlin.database.repository.PhotoRepository
 import com.example.pinterestappkotlin.model.MyProfile
 import com.example.pinterestappkotlin.network.RetrofitHttp
 import com.example.pinterestappkotlin.utils.Logger
@@ -48,11 +54,25 @@ class ProfileFragment : Fragment() {
     private lateinit var tv_username: TextView
     private lateinit var tv_followers_count: TextView
     private lateinit var tv_followings_count: TextView
+    var profileImage: String = ""
+
+    private lateinit var adapterRoom: RoomPhotosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         apiMyProfile()
 
+        adapterRoom = RoomPhotosAdapter(requireActivity() as MainActivity)
+        adapterRoom.photoList = getPhotosRoom()
+
+        (requireContext() as MainActivity).bnvVisibility()
+        (requireContext() as MainActivity).setLightStatusBar()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireContext() as MainActivity).bnvVisibility()
+        (requireContext() as MainActivity).setLightStatusBar()
     }
 
     override fun onCreateView(
@@ -82,11 +102,13 @@ class ProfileFragment : Fragment() {
                     // Expanded
                     fm_inToolbar.visibility = View.INVISIBLE
                     ll_inToolbar.visibility = View.VISIBLE
+                    Glide.with(requireContext()).load(profileImage).into(iv_profile_inToolbar)
                 }
                 else -> {
                     // Idle
                     fm_inToolbar.visibility = View.INVISIBLE
                     ll_inToolbar.visibility = View.VISIBLE
+                    Glide.with(requireContext()).load(profileImage).into(iv_profile_inToolbar)
                 }
             }
         })
@@ -99,16 +121,26 @@ class ProfileFragment : Fragment() {
         tv_followers_count = view.findViewById(R.id.tv_profile_followers)
         tv_followings_count = view.findViewById(R.id.tv_profile_followings)
 
+        val recyclerView: RecyclerView = view.findViewById(R.id.rv_savedPhotos)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.adapter = adapterRoom
+
+        if (adapterRoom.photoList.size != getPhotosRoom().size){
+            adapterRoom.updateItems(getPhotosRoom())
+        }
+
     }
 
-    private fun apiMyProfile(){
-        RetrofitHttp.pinterestService.getMyProfile().enqueue(object : Callback<MyProfile>{
+    private fun apiMyProfile() {
+        RetrofitHttp.pinterestService.getMyProfile().enqueue(object : Callback<MyProfile> {
             @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<MyProfile>, response: Response<MyProfile>) {
                 Logger.d("@@@ProfileD", response.body().toString())
                 val profile: MyProfile = response.body()!!
                 Glide.with(requireContext()).load(profile.profileImage?.large!!).into(iv_profile)
-                Glide.with(requireContext()).load(profile.profileImage?.large).into(iv_profile_inToolbar)
+                profileImage = profile.profileImage.large
+                Glide.with(requireContext()).load(profileImage).into(iv_profile_inToolbar)
+
                 tv_fullname.text = profile.name!!
                 tv_fullname_inToolbar.text = profile.name
                 tv_username.text = profile.username!!
@@ -123,5 +155,8 @@ class ProfileFragment : Fragment() {
 
         })
     }
+
+    private fun getPhotosRoom() = PhotoRepository(application = requireActivity().application).getAllPhotos() as ArrayList<PhotoRoom>
+
 
 }

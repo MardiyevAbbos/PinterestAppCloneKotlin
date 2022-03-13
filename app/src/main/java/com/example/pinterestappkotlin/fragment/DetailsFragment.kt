@@ -13,6 +13,7 @@ import com.example.pinterestappkotlin.R
 import com.example.pinterestappkotlin.activity.MainActivity
 import com.example.pinterestappkotlin.adapter.DetailsAdapter
 import com.example.pinterestappkotlin.model.PhotoItem
+import com.example.pinterestappkotlin.utils.Logger
 
 class DetailsFragment(var items: ArrayList<PhotoItem>, var position: Int) : Fragment() {
 
@@ -21,6 +22,7 @@ class DetailsFragment(var items: ArrayList<PhotoItem>, var position: Int) : Frag
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = DetailsAdapter(requireActivity() as MainActivity)
+        Logger.d("DetailsFragment", items.size.toString())
         adapter.items = items
 
         (requireContext() as MainActivity).bnvHide()

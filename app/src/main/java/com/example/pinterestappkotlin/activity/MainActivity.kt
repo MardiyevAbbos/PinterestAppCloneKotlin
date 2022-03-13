@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         } else if (supportFragmentManager.fragments.any { it is SearchFragment }) {
             if (searchFragment.onBackPressed()) {
-                finish()
+                super.onBackPressed()
             }
         }else {
             super.onBackPressed()

@@ -163,6 +163,7 @@
                             android:background="@drawable/shape_tv_rounded_border_view"/>
 
                         <TextView
+                            android:id="@+id/tv_save_room"
                             android:layout_width="80dp"
                             android:layout_height="60dp"
                             android:layout_marginStart="5dp"

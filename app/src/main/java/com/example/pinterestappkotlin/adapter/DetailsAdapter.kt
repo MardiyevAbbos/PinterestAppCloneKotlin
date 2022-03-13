@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.bumptech.glide.Glide
 import com.example.pinterestappkotlin.R
 import com.example.pinterestappkotlin.activity.MainActivity
+import com.example.pinterestappkotlin.database.entity.PhotoRoom
+import com.example.pinterestappkotlin.database.repository.PhotoRepository
 import com.example.pinterestappkotlin.model.PhotoItem
 import com.example.pinterestappkotlin.model.RelatedPhotos
 import com.example.pinterestappkotlin.network.RetrofitHttp
@@ -50,6 +52,7 @@ class DetailsAdapter(var context: MainActivity) :
         private val sponsor_followers: TextView = view.findViewById(R.id.tv_sponsor_followers)
         private val tv_description: TextView = view.findViewById(R.id.tv_description)
         private val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        private val tv_save_room: TextView = view.findViewById(R.id.tv_save_room)
         private lateinit var adapter: HomeAdapter
 
         @SuppressLint("SetTextI18n")
@@ -66,6 +69,18 @@ class DetailsAdapter(var context: MainActivity) :
             adapter = HomeAdapter(context)
             recyclerView.adapter = adapter
             apiRelatedPhotos(item.id!!)
+
+            tv_save_room.setOnClickListener{
+                val description = item.description ?: ""
+                PhotoRepository(application = context.application)
+                    .savePhoto(PhotoRoom(
+                        item.id,
+                        photo = item.urls?.regular!!,
+                        description = description,
+                        color = item.color!!
+                    ))
+                Toast.makeText(context, "This photo is saved in RoomDatabase", Toast.LENGTH_SHORT).show()
+            }
 
         }
 

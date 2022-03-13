@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "table_photos")
 data class PhotoRoom(
-    @PrimaryKey(autoGenerate = true)
-    var id: Long? = null,
-    var photo: String,
-    var photoId: String
+    @PrimaryKey val id: String,
+    var photo: String? = null,
+    var description: String? = null,
+    var color: String? = null
 )

@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface PinterestService {
 
     companion object {
-        const val access_key: String = "8QHnqWs2tJaeeMUvjMbBDcRgZhyzNvSNSXuMVcXqJ3U"
+        const val access_key: String = "A5a6esJUxWtofmY6NTTgRiEchDgfZYjKNrReK-hw_-o"
     }
 
     @Headers("Authorization: Client-ID $access_key")
@@ -20,6 +20,9 @@ interface PinterestService {
         @Query("per_page") per_page: Int = 20
     ): Call<ArrayList<PhotoItem>>
 
+    @Headers("Authorization: Client-ID $access_key")
+    @GET("photos/{id}")
+    fun getPhoto(@Path("id") id: String): Call<WelcomeRoomPhoto>  // get one photo that Use id
 
     @Headers("Authorization: Client-ID $access_key")
     @GET("photos/{id}/related")
