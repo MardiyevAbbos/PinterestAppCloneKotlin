@@ -2,24 +2,101 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/icon_back_black"/>
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/icon_back_black" />
 
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edt_search"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_tv_rounded_border_follow"
+            android:drawableLeft="@drawable/icon_search_black"
+            android:drawableRight="@drawable/icon_camera_black"
+            android:hint="Search for ideas"
+            android:imeOptions="actionSearch"
+            android:textColorHint="@color/search_text_color"
+            android:inputType="text"
+            android:paddingStart="8dp"
+            android:paddingEnd="6dp"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Cancel"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_popular_pinterest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Popular on Pinterest"
+            android:textColor="#D81C1B1B"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_popular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/white" />
 
 </LinearLayout>

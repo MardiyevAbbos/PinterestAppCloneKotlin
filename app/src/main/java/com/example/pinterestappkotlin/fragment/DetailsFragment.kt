@@ -16,8 +16,13 @@ import com.example.pinterestappkotlin.model.PhotoItem
 
 class DetailsFragment(var items: ArrayList<PhotoItem>, var position: Int) : Fragment() {
 
+    private lateinit var adapter: DetailsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        adapter = DetailsAdapter(requireActivity() as MainActivity)
+        adapter.items = items
+
         (requireContext() as MainActivity).bnvHide()
         (requireContext() as MainActivity).clearLightStatusBar()
     }
@@ -59,13 +64,8 @@ class DetailsFragment(var items: ArrayList<PhotoItem>, var position: Int) : Frag
             }
         })
 
-        refreshAdapter(recyclerView)
+        recyclerView.adapter = adapter
 
-    }
-
-    private fun refreshAdapter(rvDetails: RecyclerView) {
-        val adapter = DetailsAdapter(requireActivity() as MainActivity, items)
-        rvDetails.adapter = adapter
     }
 
 }

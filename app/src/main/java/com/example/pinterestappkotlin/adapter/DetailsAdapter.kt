@@ -22,8 +22,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailsAdapter(var context: MainActivity, var items: ArrayList<PhotoItem>) :
+class DetailsAdapter(var context: MainActivity) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var items: ArrayList<PhotoItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -53,17 +55,17 @@ class DetailsAdapter(var context: MainActivity, var items: ArrayList<PhotoItem>)
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
             val item = items[position]
-            Picasso.get().load(item.urls.small).placeholder(ColorDrawable(Color.parseColor(item.color))).into(iv_photo)
-            //Picasso.get().load(item.user.profileImage.small).placeholder(ColorDrawable(Color.parseColor(item.color))).into(iv_sponsor)
+            Picasso.get().load(item.urls?.small).placeholder(ColorDrawable(Color.parseColor(item.color))).into(iv_photo)
+            Picasso.get().load(item.user?.profileImage?.large).placeholder(ColorDrawable(Color.parseColor(item.color))).into(iv_sponsor)
 
-            sponsor_fullName.text = item.user.name
-            sponsor_followers.text = "${item.user.links.following} Followers"
+            sponsor_fullName.text = item.user?.name
+            sponsor_followers.text = "${item.likes!!} Followers"
             tv_description.text = "${item.description}"
 
             recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapter = HomeAdapter(context)
             recyclerView.adapter = adapter
-            apiRelatedPhotos(item.id)
+            apiRelatedPhotos(item.id!!)
 
         }
 

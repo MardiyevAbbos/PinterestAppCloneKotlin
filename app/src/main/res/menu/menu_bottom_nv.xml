@@ -13,7 +13,7 @@
         android:icon="@drawable/comment_icon"
         android:title="Comment"/>
 
-    <item android:id="@+id/person"
+    <item android:id="@+id/profile"
         android:icon="@drawable/person_icon"
         android:title="Person"/>
 

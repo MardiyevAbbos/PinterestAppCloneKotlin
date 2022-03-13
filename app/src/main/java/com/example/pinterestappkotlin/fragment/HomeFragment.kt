@@ -20,17 +20,19 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
 
     companion object {
-        var instance: HomeFragment? = null
+        private var instance: HomeFragment? = null
 
         fun newInstance(): HomeFragment {
             if (instance == null) {
                 instance = HomeFragment()
             }
+
             return instance!!
         }
     }
 
     private lateinit var adapter: HomeAdapter
+    private lateinit var recyclerView: RecyclerView
     private var page: Int = 1
 
     override fun onCreateView(
@@ -47,7 +49,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        apiPhotoList()
+        adapter = HomeAdapter(requireActivity() as MainActivity)
+        apiPhotoList(1) // For get info first Page
 
         (requireContext() as MainActivity).bnvVisibility()
         (requireContext() as MainActivity).setLightStatusBar()
@@ -55,7 +58,6 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        apiPhotoList()
 
         (requireContext() as MainActivity).bnvVisibility()
         (requireContext() as MainActivity).setLightStatusBar()
@@ -63,16 +65,15 @@ class HomeFragment : Fragment() {
 
 
     private fun initViews(view: View) {
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        refreshAdapter(recyclerView)
+        recyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
-                    apiPhotoList()
+                    apiPhotoList(++page)
                 }
             }
         })
@@ -80,21 +81,20 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun refreshAdapter(rvHome: RecyclerView) {
-        adapter = HomeAdapter(requireContext() as MainActivity)
-        rvHome.adapter = adapter
-    }
-
-
-    private fun apiPhotoList() {
-        RetrofitHttp.pinterestService.listPhotos(page++)
+    private fun apiPhotoList(pageCount: Int) {
+        RetrofitHttp.pinterestService.listPhotos(pageCount)
             .enqueue(object : Callback<ArrayList<PhotoItem>> {
                 override fun onResponse(
                     call: Call<ArrayList<PhotoItem>>,
                     response: Response<ArrayList<PhotoItem>>
                 ) {
-                    adapter.addPhotos(response.body()!!)
-                    Logger.d("@@@", response.body().toString())
+                    if (pageCount == 1){
+                        adapter.addPhotos(response.body()!!)
+                    }else {
+                        adapter.addPhotos(response.body()!!)
+                    }
+
+                    Logger.d("@@@TTT", response.body().toString())
                 }
 
                 override fun onFailure(call: Call<ArrayList<PhotoItem>>, t: Throwable) {
