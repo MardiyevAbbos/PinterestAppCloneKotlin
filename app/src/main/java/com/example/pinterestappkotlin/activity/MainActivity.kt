@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.pinterestappkotlin.R
 import com.example.pinterestappkotlin.fragment.HomeFragment
+import com.example.pinterestappkotlin.fragment.MessageFragment
 import com.example.pinterestappkotlin.fragment.ProfileFragment
 import com.example.pinterestappkotlin.fragment.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> replaceFragment(HomeFragment.newInstance())
                 R.id.search -> replaceFragment(searchFragment)
+                R.id.message -> replaceFragment(MessageFragment.newInstance())
                 R.id.profile -> replaceFragment(profileFragment)
             }
             it.isChecked

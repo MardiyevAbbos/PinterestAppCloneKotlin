@@ -14,41 +14,41 @@ data class WelcomeElement (
     @SerializedName("title")
     val title: String? = null,
     val description: String? = null,
-    val publishedAt: String? = null,
-    val lastCollectedAt: String? = null,
-    val updatedAt: String? = null,
+    val published_at: String? = null,
+    val last_collected_at: String? = null,
+    val updated_at: String? = null,
     val curated: Boolean? = null,
     val featured: Boolean? = null,
-    val totalPhotos: Long? = null,
+    val total_photos: Long? = null,
     val private: Boolean? = null,
-    val shareKey: String? = null,
+    val share_key: String? = null,
     val tags: List<Tag>? = null,
     val links: WelcomeLinks? = null,
     val user: User? = null,
     @SerializedName("cover_photo")
-    val coverPhoto: WelcomeCoverPhoto? = null,
-    val previewPhotos: List<PreviewPhoto>? = null
+    val cover_photo: WelcomeCoverPhoto? = null,
+    val preview_photos: List<PreviewPhoto>? = null
 )
 
 data class WelcomeCoverPhoto (
     val id: String? = null,
-    val createdAt: String? = null,
-    val updatedAt: String? = null,
-    val promotedAt: String? = null,
+    val created_at: String? = null,
+    val updated_at: String? = null,
+    val promoted_at: String? = null,
     val width: Long? = null,
     val height: Long? = null,
     val color: String? = null,
-    val blurHash: String? = null,
+    val blur_hash: String? = null,
     val description: String? = null,
-    val altDescription: String? = null,
+    val alt_description: String? = null,
     val urls: Urls? = null,
     val links: CoverPhotoLinks? = null,
     val categories: List<Any?>? = null,
     val likes: Long? = null,
-    val likedByUser: Boolean? = null,
-    val currentUserCollections: List<Any?>? = null,
+    val liked_byUser: Boolean? = null,
+    val current_user_collections: List<Any?>? = null,
     val sponsorship: Any? = null,
-    val topicSubmissions: PurpleTopicSubmissions? = null,
+    val topic_submissions: PurpleTopicSubmissions? = null,
     val user: User? = null
 )
 
@@ -56,19 +56,19 @@ data class CoverPhotoLinks (
     val self: String? = null,
     val html: String? = null,
     val download: String? = null,
-    val downloadLocation: String? = null
+    val download_location: String? = null
 )
 
 data class PurpleTopicSubmissions (
-    val foodDrink: The3_DRenders? = null,
+    val food_drink: The3_DRenders? = null,
     val fashion: The3_DRenders? = null,
-    val businessWork: The3_DRenders? = null,
-    val the3DRenders: The3_DRenders? = null
+    val business_work: The3_DRenders? = null,
+    val the3_d_renders: The3_DRenders? = null
 )
 
 data class The3_DRenders (
     val status: Status? = null,
-    val approvedOn: String? = null
+    val approved_on: String? = null
 )
 
 enum class Status {
@@ -77,39 +77,39 @@ enum class Status {
 
 data class PreviewPhoto (
     val id: String? = null,
-    val createdAt: String? = null,
-    val updatedAt: String? = null,
-    val blurHash: String? = null,
+    val created_at: String? = null,
+    val updated_at: String? = null,
+    val blur_hash: String? = null,
     val urls: Urls? = null
 )
 
 
 data class SourceCoverPhoto (
     val id: String? = null,
-    val createdAt: String? = null,
-    val updatedAt: String? = null,
-    val promotedAt: String? = null,
+    val created_at: String? = null,
+    val updated_at: String? = null,
+    val promoted_at: String? = null,
     val width: Long? = null,
     val height: Long? = null,
     val color: String? = null,
-    val blurHash: String? = null,
+    val blur_hash: String? = null,
     val description: String? = null,
-    val altDescription: String? = null,
+    val alt_description: String? = null,
     val urls: Urls? = null,
     val links: CoverPhotoLinks? = null,
     val categories: List<Any?>? = null,
     val likes: Long? = null,
-    val likedByUser: Boolean? = null,
-    val currentUserCollections: List<Any?>? = null,
+    val liked_byUser: Boolean? = null,
+    val current_user_collections: List<Any?>? = null,
     val sponsorship: Any? = null,
-    val topicSubmissions: FluffyTopicSubmissions? = null,
+    val topic_submissions: FluffyTopicSubmissions? = null,
     val user: User? = null
 )
 
 data class FluffyTopicSubmissions (
-    val foodDrink: The3_DRenders? = null,
+    val food_drink: The3_DRenders? = null,
     val health: The3_DRenders? = null,
-    val texturesPatterns: The3_DRenders? = null,
+    val textures_patterns: The3_DRenders? = null,
     val wallpapers: The3_DRenders? = null,
     val architecture: The3_DRenders? = null,
     val nature: The3_DRenders? = null,

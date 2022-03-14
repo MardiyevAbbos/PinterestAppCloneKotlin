@@ -9,7 +9,7 @@
         android:icon="@drawable/search_icon"
         android:title="Search"/>
 
-    <item android:id="@+id/comment"
+    <item android:id="@+id/message"
         android:icon="@drawable/comment_icon"
         android:title="Comment"/>
 

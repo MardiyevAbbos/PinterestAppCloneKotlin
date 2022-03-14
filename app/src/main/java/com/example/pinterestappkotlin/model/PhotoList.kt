@@ -59,8 +59,8 @@ data class User(
     val location: String? = null,
     val links: UserLinks? = null,
     @SerializedName("profile_image")
-    val profileImage: ProfileImage? = null,
-    val instagramUsername: String? = null,
+    val profile_image: ProfileImage? = null,
+    val instagram_username: String? = null,
     val totalCollections: Long? = null,
     val totalLikes: Long? = null,
     val totalPhotos: Long? = null,

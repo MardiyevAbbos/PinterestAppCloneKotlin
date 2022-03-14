@@ -14,10 +14,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.pinterestappkotlin.R
 import com.example.pinterestappkotlin.activity.MainActivity
-import com.example.pinterestappkotlin.adapter.RoomPhotosAdapter
+import com.example.pinterestappkotlin.adapter.HomeAdapter
 import com.example.pinterestappkotlin.database.entity.PhotoRoom
 import com.example.pinterestappkotlin.database.repository.PhotoRepository
 import com.example.pinterestappkotlin.model.MyProfile
+import com.example.pinterestappkotlin.model.PhotoItem
 import com.example.pinterestappkotlin.network.RetrofitHttp
 import com.example.pinterestappkotlin.utils.Logger
 import com.google.android.material.appbar.AppBarLayout
@@ -56,14 +57,14 @@ class ProfileFragment : Fragment() {
     private lateinit var tv_followings_count: TextView
     var profileImage: String = ""
 
-    private lateinit var adapterRoom: RoomPhotosAdapter
+    private lateinit var adapterHome: HomeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         apiMyProfile()
 
-        adapterRoom = RoomPhotosAdapter(requireActivity() as MainActivity)
-        adapterRoom.photoList = getPhotosRoom()
+        adapterHome = HomeAdapter(requireActivity() as MainActivity)
+        adapterHome.photoList = getPhotosRoom()
 
         (requireContext() as MainActivity).bnvVisibility()
         (requireContext() as MainActivity).setLightStatusBar()
@@ -85,6 +86,7 @@ class ProfileFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initViews(view: View) {
         collapsingTBR = view.findViewById(R.id.collapsingTBR)
         fm_inToolbar = view.findViewById(R.id.fm_inToolbar)
@@ -123,10 +125,11 @@ class ProfileFragment : Fragment() {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.rv_savedPhotos)
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView.adapter = adapterRoom
+        recyclerView.adapter = adapterHome
 
-        if (adapterRoom.photoList.size != getPhotosRoom().size){
-            adapterRoom.updateItems(getPhotosRoom())
+        if (adapterHome.photoList.size != getPhotosRoom().size){
+            adapterHome.photoList = getPhotosRoom()
+            adapterHome.notifyDataSetChanged()
         }
 
     }
@@ -137,15 +140,15 @@ class ProfileFragment : Fragment() {
             override fun onResponse(call: Call<MyProfile>, response: Response<MyProfile>) {
                 Logger.d("@@@ProfileD", response.body().toString())
                 val profile: MyProfile = response.body()!!
-                Glide.with(requireContext()).load(profile.profileImage?.large!!).into(iv_profile)
-                profileImage = profile.profileImage.large
+                Glide.with(requireContext()).load(profile.profile_image?.large!!).into(iv_profile)
+                profileImage = profile.profile_image.large
                 Glide.with(requireContext()).load(profileImage).into(iv_profile_inToolbar)
 
                 tv_fullname.text = profile.name!!
                 tv_fullname_inToolbar.text = profile.name
                 tv_username.text = profile.username!!
-                tv_followers_count.text = "${profile.followersCount!!} followers"
-                tv_followings_count.text = "${profile.followingCount!!} following"
+                tv_followers_count.text = "${profile.followers_count!!} followers"
+                tv_followings_count.text = "${profile.following_count!!} following"
 
             }
 
@@ -156,7 +159,14 @@ class ProfileFragment : Fragment() {
         })
     }
 
-    private fun getPhotosRoom() = PhotoRepository(application = requireActivity().application).getAllPhotos() as ArrayList<PhotoRoom>
+    private fun getPhotosRoom(): ArrayList<PhotoItem> {
+        val photoRooms:ArrayList<PhotoRoom> = PhotoRepository(application = requireActivity().application).getAllPhotos() as ArrayList<PhotoRoom>
+        val photoItems: ArrayList<PhotoItem> = ArrayList()
+        for(photoRoom in photoRooms){
+            photoItems.add(photoRoom.photoItem)
+        }
+        return photoItems
+    }
 
 
 }

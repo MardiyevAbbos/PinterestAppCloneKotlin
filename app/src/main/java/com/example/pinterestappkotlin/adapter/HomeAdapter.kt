@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pinterestappkotlin.R
 import com.example.pinterestappkotlin.activity.MainActivity
-import com.example.pinterestappkotlin.fragment.DetailsFragment
+import com.example.pinterestappkotlin.fragment.DetailsFragmentViewPager
 import com.example.pinterestappkotlin.model.PhotoItem
 import com.google.android.material.imageview.ShapeableImageView
 import com.squareup.picasso.Picasso
@@ -53,24 +53,7 @@ class HomeAdapter(var context: MainActivity) : RecyclerView.Adapter<RecyclerView
             tv_description.text = item.description
 
             ll_item_click.setOnClickListener {
-//                val items: ArrayList<PhotoItem> = ArrayList()
-//                var idPos = position
-//                when {
-//                    photoList.size > 10 && position < 6 -> {
-//                        for (i in 0..10) items.add(photoList[i])
-//                    }
-//                    photoList.size > 10 && position > 5 && position < photoList.size - 6 -> {
-//                        for(i in position-5.. position+4) items.add(photoList[i])
-//                        idPos = 5
-//                    }
-//                    photoList.size > 10 && position > photoList.size - 6 -> {
-//                        for (i in photoList.size-12 until photoList.size) items.add(photoList[i])
-//                        idPos = 12 + position - photoList.size
-//                    }
-//                    else -> { items.addAll(photoList) }
-//                }
-
-                context.replaceFragment(DetailsFragment(photoList, position))
+                context.replaceFragment(DetailsFragmentViewPager(photoList, position))
             }
 
         }

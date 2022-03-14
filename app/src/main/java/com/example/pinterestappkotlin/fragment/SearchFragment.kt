@@ -254,7 +254,7 @@ class SearchFragment : Fragment(){
             override fun onResponse(call: Call<ArrayList<WelcomeElement>>, response: Response<ArrayList<WelcomeElement>>) {
                 Logger.d("@@@CollectionsD", response.body().toString())
                 for (collection in response.body()!!){
-                    collects.add(MyCollection(collection.title!!, collection.coverPhoto?.urls?.thumb!!))
+                    collects.add(MyCollection(collection.title!!, collection.cover_photo?.urls?.thumb!!))
                 }
             }
 
