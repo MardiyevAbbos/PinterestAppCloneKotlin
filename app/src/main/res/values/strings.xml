@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PinterestAppKotlin</string>
+    <string name="app_name">My Pinterest</string>
     <string name="tab_updates">Updates</string>
     <string name="tab_messages">Messages</string>
 </resources>

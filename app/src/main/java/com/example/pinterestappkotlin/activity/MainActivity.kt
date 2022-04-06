@@ -61,7 +61,9 @@ class MainActivity : AppCompatActivity() {
         if (!fragmentPopped) {
             val ft = manager.beginTransaction()
             ft.replace(R.id.fl_forFragment, fragment)
-            ft.addToBackStack(backStateName)
+            if(backStateName.isNotEmpty()){
+                ft.addToBackStack(backStateName)
+            }
             ft.commit()
         }
 

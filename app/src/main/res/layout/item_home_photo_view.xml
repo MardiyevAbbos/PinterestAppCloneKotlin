@@ -36,7 +36,7 @@
             android:textStyle="normal" />
 
         <ImageView
-            android:id="@+id/iv_menu"
+            android:id="@+id/iv_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_more_hore_black" />
